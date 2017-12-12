@@ -117,7 +117,7 @@ struct vec3f
 		return *this;
 	}
 
-	double angle(const vec3f& v)
+	double angle(const vec3f& v) const
 	{
 		vec3f a = v, b = *this;
 		double dot = v.x * x + v.y * y + v.z * z;
@@ -126,10 +126,10 @@ struct vec3f
 		double input = dot / len;
 		if (input < -1) input = -1;
 		if (input > 1) input = 1;
-		return (double)acos(input);
+		return acos(input);
 	}
 
-	double angle2(const vec3f& v, const vec3f& w)
+	double angle2(const vec3f& v, const vec3f& w) const
 	{
 		vec3f a = v, b = *this;
 		double dot = a.x * b.x + a.y * b.y + a.z * b.z;
@@ -139,8 +139,8 @@ struct vec3f
 		vec3f plane;
 		plane.cross(b, w);
 		if (plane.x * a.x + plane.y * a.y + plane.z * a.z > 0)
-			return (double)-acos(dot / len);
-		return (double)acos(dot / len);
+			return -acos(dot / len);
+		return acos(dot / len);
 	}
 
 	vec3f rot_x(double a)
@@ -183,27 +183,27 @@ struct vec3f
 		return *this;
 	}
 
-	vec3f frac()
+	vec3f frac() const
 	{
 		return vec3f(
-			x - double(int(x)),
-			y - double(int(y)),
-			z - double(int(z))
+			x - static_cast<int>(x),
+			y - static_cast<int>(y),
+			z - static_cast<int>(z)
 		);
 	}
 
-	vec3f integer()
+	vec3f integer() const
 	{
 		return vec3f(
-			double(int(x)),
-			double(int(y)),
-			double(int(z))
+			static_cast<int>(x),
+			static_cast<int>(y),
+			static_cast<int>(z)
 		);
 	}
 
 	double length() const
 	{
-		return (double)sqrt(x * x + y * y + z * z);
+		return sqrt(x * x + y * y + z * z);
 	}
 
 	vec3f normalize(double desired_length = 1)
@@ -231,15 +231,15 @@ struct vec3f
 	double random_double_01(double a)
 	{
 		double rnf = a * 14.434252 + a * 364.2343 + a * 4213.45352 + a * 2341.43255 + a * 254341.43535 + a * 223454341.3523534245 + 23453.423412;
-		int rni = ((int)rnf) % 100000;
-		return double(rni) / (100000.0f - 1.0f);
+		int rni = static_cast<int>(rnf) % 100000;
+		return static_cast<double>(rni) / (100000.0f - 1.0f);
 	}
 
 	vec3f random01_fxyz()
 	{
-		x = (double)random_double_01(x);
-		y = (double)random_double_01(y);
-		z = (double)random_double_01(z);
+		x = random_double_01(x);
+		y = random_double_01(y);
+		z = random_double_01(z);
 		return *this;
 	}
 };
@@ -412,7 +412,8 @@ namespace Simplify
 						if (tcount <= v0.tcount)
 						{
 							// save ram
-							if (tcount)memcpy(&refs[v0.tstart], &refs[tstart], tcount * sizeof(Ref));
+							if (tcount)
+								memcpy(&refs[v0.tstart], &refs[tstart], tcount * sizeof(Ref));
 						}
 						else
 							// append
