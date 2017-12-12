@@ -39,77 +39,77 @@ struct vec3f
 {
 	double x, y, z;
 
-	inline vec3f(void) {}
+	vec3f(void) {}
 
 	//inline vec3f operator =( vector3 a )
 	// { vec3f b ; b.x = a.x; b.y = a.y; b.z = a.z; return b;}
 
-	inline vec3f(vector3 a)
+	vec3f(vector3 a)
 	{
 		x = a.x; y = a.y; z = a.z;
 	}
 
-	inline vec3f(const double X, const double Y, const double Z)
+	vec3f(const double X, const double Y, const double Z)
 	{
 		x = X; y = Y; z = Z;
 	}
 
-	inline vec3f operator + (const vec3f& a) const
+	vec3f operator + (const vec3f& a) const
 	{
 		return vec3f(x + a.x, y + a.y, z + a.z);
 	}
 
-	inline vec3f operator += (const vec3f& a) const
+	vec3f operator += (const vec3f& a) const
 	{
 		return vec3f(x + a.x, y + a.y, z + a.z);
 	}
 
-	inline vec3f operator * (const double a) const
+	vec3f operator * (const double a) const
 	{
 		return vec3f(x * a, y * a, z * a);
 	}
 
-	inline vec3f operator * (const vec3f a) const
+	vec3f operator * (const vec3f a) const
 	{
 		return vec3f(x * a.x, y * a.y, z * a.z);
 	}
 
-	inline vec3f v3() const
+	vec3f v3() const
 	{
 		return vec3f(x, y, z);
 	}
 
-	inline vec3f operator = (const vector3 a)
+	vec3f operator = (const vector3 a)
 	{
 		x = a.x; y = a.y; z = a.z; return *this;
 	}
 
-	inline vec3f operator = (const vec3f a)
+	vec3f operator = (const vec3f a)
 	{
 		x = a.x; y = a.y; z = a.z; return *this;
 	}
 
-	inline vec3f operator / (const vec3f a) const
+	vec3f operator / (const vec3f a) const
 	{
 		return vec3f(x / a.x, y / a.y, z / a.z);
 	}
 
-	inline vec3f operator - (const vec3f& a) const
+	vec3f operator - (const vec3f& a) const
 	{
 		return vec3f(x - a.x, y - a.y, z - a.z);
 	}
 
-	inline vec3f operator / (const double a) const
+	vec3f operator / (const double a) const
 	{
 		return vec3f(x / a, y / a, z / a);
 	}
 
-	inline double dot(const vec3f& a) const
+	double dot(const vec3f& a) const
 	{
 		return a.x * x + a.y * y + a.z * z;
 	}
 
-	inline vec3f cross(const vec3f& a, const vec3f& b)
+	vec3f cross(const vec3f& a, const vec3f& b)
 	{
 		x = a.y * b.z - a.z * b.y;
 		y = a.z * b.x - a.x * b.z;
@@ -117,7 +117,7 @@ struct vec3f
 		return *this;
 	}
 
-	inline double angle(const vec3f& v)
+	double angle(const vec3f& v)
 	{
 		vec3f a = v, b = *this;
 		double dot = v.x * x + v.y * y + v.z * z;
@@ -129,7 +129,7 @@ struct vec3f
 		return (double)acos(input);
 	}
 
-	inline double angle2(const vec3f& v, const vec3f& w)
+	double angle2(const vec3f& v, const vec3f& w)
 	{
 		vec3f a = v, b = *this;
 		double dot = a.x * b.x + a.y * b.y + a.z * b.z;
@@ -143,7 +143,7 @@ struct vec3f
 		return (double)acos(dot / len);
 	}
 
-	inline vec3f rot_x(double a)
+	vec3f rot_x(double a)
 	{
 		double yy = cos(a) * y + sin(a) * z;
 		double zz = cos(a) * z - sin(a) * y;
@@ -151,7 +151,7 @@ struct vec3f
 		return *this;
 	}
 
-	inline vec3f rot_y(double a)
+	vec3f rot_y(double a)
 	{
 		double xx = cos(-a) * x + sin(-a) * z;
 		double zz = cos(-a) * z - sin(-a) * x;
@@ -159,7 +159,7 @@ struct vec3f
 		return *this;
 	}
 
-	inline void clamp(double min, double max)
+	void clamp(double min, double max)
 	{
 		if (x < min) x = min;
 		if (y < min) y = min;
@@ -169,7 +169,7 @@ struct vec3f
 		if (z > max) z = max;
 	}
 
-	inline vec3f rot_z(double a)
+	vec3f rot_z(double a)
 	{
 		double yy = cos(a) * y + sin(a) * x;
 		double xx = cos(a) * x - sin(a) * y;
@@ -177,13 +177,13 @@ struct vec3f
 		return *this;
 	}
 
-	inline vec3f invert()
+	vec3f invert()
 	{
 		x = -x; y = -y; z = -z;
 		return *this;
 	}
 
-	inline vec3f frac()
+	vec3f frac()
 	{
 		return vec3f(
 			x - double(int(x)),
@@ -192,7 +192,7 @@ struct vec3f
 		);
 	}
 
-	inline vec3f integer()
+	vec3f integer()
 	{
 		return vec3f(
 			double(int(x)),
@@ -201,12 +201,12 @@ struct vec3f
 		);
 	}
 
-	inline double length() const
+	double length() const
 	{
 		return (double)sqrt(x * x + y * y + z * z);
 	}
 
-	inline vec3f normalize(double desired_length = 1)
+	vec3f normalize(double desired_length = 1)
 	{
 		double square = sqrt(x * x + y * y + z * z);
 		/*
